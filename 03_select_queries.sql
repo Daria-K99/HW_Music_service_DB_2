@@ -17,7 +17,14 @@ WHERE name NOT LIKE '% %';
 
 -- Название треков, которые содержат слово «мой» или «my»
 SELECT title FROM Tracks 
-WHERE title ILIKE '%my%' OR title ILIKE '%мой%';
+WHERE title ILIKE 'my %' 
+OR title ILIKE '% my'
+OR title ILIKE '% my %'
+OR title ILIKE 'my'
+OR title ILIKE 'мой %'
+OR title ILIKE '% мой'
+OR title ILIKE '% мой %'
+OR title ILIKE 'мой';
 
 -- Количество исполнителей в каждом жанре
 SELECT g.name AS genre, COUNT(ag.artist_id) AS artist_count FROM Genres g
@@ -54,7 +61,7 @@ WHERE ar.name = 'BLACKPINK';
 SELECT al.title FROM Albums al
 JOIN Artist_Albums aa ON al.album_id = aa.album_id
 JOIN Artist_Genres ag ON aa.artist_id = ag.artist_id
-GROUP BY al.title
+GROUP BY al.title, aa.artist_id
 HAVING COUNT(DISTINCT ag.genre_id) > 1;
 
 -- Наименования треков, которые не входят в сборники
